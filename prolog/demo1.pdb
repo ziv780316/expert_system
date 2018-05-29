@@ -1,0 +1,31 @@
+:-style_check(-discontiguous).
+
+% facts
+sun_is_hot.
+
+% relation
+food(pizza).	% pizza is a food
+food(burger).	% burger is a food
+age(qq,1).	% qq is 1 years old
+age(lin,28).	
+age(baba,29).	
+love(baba,lin,qq). % baba love lin and qq
+sport(run).
+sport(ball).
+sport(swim).
+easy(run).
+fun(swim).
+
+% rules	(clauses)
+meal(X) :- food(X). % X is meal if X is food (prove X is food for verify X is meal)
+
+% and, or rules
+happy(X) :- sport(X), easy(X).	% X is happy if X is a easy sport 
+happy(X) :- sport(X), fun(X).	% or X is happy if X is fun sport
+adult(X) :- age(X,Y), Y>20.
+
+?- happy(X), format('do sport ~s is happy', X), nl, fail. % nl is newline, fail is used to show all
+?- adult(X), age(X,Y), format('~s age is ~d large than 20 is adult', [X, Y]), nl, fail. 
+
+% exit 
+?- halt.
