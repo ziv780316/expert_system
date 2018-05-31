@@ -27,5 +27,24 @@ adult(X) :- age(X,Y), Y>20.
 ?- happy(X), format('do sport ~s is happy', X), nl, fail. % nl is newline, fail is used to show all
 ?- adult(X), age(X,Y), format('~s age is ~d large than 20 is adult', [X, Y]), nl, fail. 
 
+% recursive call
+path(node1,node2).
+path(node2,node3).
+path(node3,node4).
+path(node4,node5).
+path(node6,node7).
+path(node9,node5).
+connected(X,Y) :- path(X,Y).
+connected(X,Y) :- path(X,Z), connected(Z,Y).
+?- connected(X,node5), format('~s is connected to node5', X), nl, fail. % find all node connected to node1
+
+% list inside search
+inside(Item, [Item|Rest]).
+inside(Item, [Disregard|Rest]) :- format('disregard ~s\n', Disregard), inside(Item, Rest).
+?- inside(c, [a,b,c,d]), format('c is inside list' ), nl.
+
+% list construct
+
+
 % exit 
 ?- halt.
