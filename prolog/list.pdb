@@ -1,0 +1,62 @@
+% append(A,B,A+B)
+append([],List,List).
+append([H|T],List,[H|Result]) :- append(T,List,Result).
+?- append([1,2,3],[4,5,6],X), write(X), nl.
+
+% push_front
+push_front(List,X,[X|List]).
+?- push_front([1,2],3,X), write(X), nl.
+
+% push_back
+push_back(List,X,Result) :- append(List,[X],Result).
+?- push_back([1,2],3,X), write(X), nl.
+
+% get_front
+get_front([],[]).
+get_front([H|_],H).
+?- get_front([1,2],X), write(X), nl.
+
+% pop_back
+get_back([H|[]],H).
+get_back([_|T],Result) :- get_back(T,Result).
+?- get_back([1,2],X), write(X), nl.
+
+% list inside search
+inside(Item, [Item|_]). 
+inside(Item, [_|Rest]) :- inside(Item, Rest). % [_|R] disregard the head
+?- inside(c, [a,b,c,d]), format('c is inside list' ), nl.
+
+% delete
+delete([],_,[]).
+delete([H|T],H,Result) :- delete(T,H,Result).
+delete([H|T],X,[H|Result]) :- delete(T,X,Result).
+?- delete([1,2,3,2,5],2,X), write(X), nl.
+
+% replace
+replace([],_,_,[]).
+replace([H|T],H,Y,[Y|Result]) :- replace(T,H,Y,Result).
+replace([H|T],X,Y,[H|Result]) :- replace(T,X,Y,Result).
+?- replace([1,2,3,2,5],2,a,X), write(X), nl.
+
+% reverse
+reverse([],List,List).
+reverse([H|T],BUF,Result) :- reverse(T,[H|BUF],Result).
+?- reverse([1,2,3],[],X), write(X), nl.
+
+% insert_back
+insert_back([H|T],H,Y,[H|[Y|T]]).
+insert_back([H|T],X,Y,[H|Result]) :- insert_back(T,X,Y,Result).
+?- insert_back([1,2,3,4],3,a,X), write(X), nl.
+
+% insert_front
+insert_front([H|T],H,Y,[Y|[H|T]]).
+insert_front([H|T],X,Y,[H|Result]) :- insert_front(T,X,Y,Result).
+?- insert_front([1,2,3,4],3,a,X), write(X), nl.
+
+% traverse
+traverse([]).
+traverse([H|T]) :- format('~w ',H), traverse(T).
+?- traverse([1,2,3]), nl.
+
+% exit
+?- halt.

@@ -38,13 +38,5 @@ connected(X,Y) :- path(X,Y).
 connected(X,Y) :- path(X,Z), connected(Z,Y).
 ?- connected(X,node5), format('~s is connected to node5', X), nl, fail. % find all node connected to node1
 
-% list inside search
-inside(Item, [Item|Rest]).
-inside(Item, [Disregard|Rest]) :- format('disregard ~s\n', Disregard), inside(Item, Rest).
-?- inside(c, [a,b,c,d]), format('c is inside list' ), nl.
-
-% list construct
-
-
 % exit 
 ?- halt.
