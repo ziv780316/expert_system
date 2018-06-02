@@ -24,7 +24,7 @@ travel(A,B,Visited,[B|Visited]) :-
 
 travel(A,B,Visited,Path) :-
 	connected(A,C),
-	C\=B,
+	C\==B,
 	not(member(C,Visited)),
 	travel(C,B,[C|Visited],Path).
 	
