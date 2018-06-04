@@ -1,0 +1,7 @@
+:- use_module(library(clpfd)).
+?- Y+X#=3, Y-X#=1, write(X), nl, write(Y), nl.
+
+convert(C,F) :- (F-32)*5/9 #= C.
+?- convert(35,F), write(F), nl.
+
+?- halt.
