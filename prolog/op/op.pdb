@@ -1,0 +1,18 @@
+1 + 2.
+?- 1 + X, write(X), nl.
+
+:-op(800,xfx,<===>). % de Morgan's equivalence
+:-op(700,xfy, v ). % disjunction
+:-op(600,xfy, ^ ). % conjunction
+:-op(500,fy,~). % negation
+~(A ^ B) <===> ~A v ~B.
+?- ~(A ^ B) <===> C, write(C), nl.
+
+:-op(200,yfx,and).
+:-op(300,xfx,plays).
+:-op(400,yf,well).
+lin plays piano and ball well. % well(plays(lin,and(piano,ball)).
+?- lin plays X well, write(X), nl.
+?- well(plays(lin,X)), write(X), nl.
+
+:- halt.

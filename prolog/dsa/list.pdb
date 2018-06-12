@@ -27,10 +27,15 @@ inside(Item, [_|Rest]) :- inside(Item, Rest). % [_|R] disregard the head
 ?- inside(c, [a,b,c,d]), format('c is inside list' ), nl.
 
 % delete
-delete([],_,[]).
-delete([H|T],H,Result) :- delete(T,H,Result).
+delete([H|T],H,T).
 delete([H|T],X,[H|Result]) :- delete(T,X,Result).
 ?- delete([1,2,3,2,5],2,X), write(X), nl.
+
+% delete_all
+delete_all([],_,[]).
+delete_all([H|T],H,Result) :- delete_all(T,H,Result).
+delete_all([H|T],X,[H|Result]) :- delete_all(T,X,Result).
+?- delete_all([1,2,3,2,5],2,X), write(X), nl.
 
 % replace
 replace([],_,_,[]).
@@ -57,6 +62,32 @@ insert_front([H|T],X,Y,[H|Result]) :- insert_front(T,X,Y,Result).
 traverse([]).
 traverse([H|T]) :- format('~w ',H), traverse(T).
 ?- traverse([1,2,3]), nl.
+
+% dict
+hash(Key,Value) :- Dict=[p(1,one),p(2,two),p(3,three)], member(p(Key,Value), Dict).
+?- hash(2,Value), write(Value), nl.
+
+% sublist
+sublist(L1,L2) :- append(_,L1,Tmp1), append(Tmp1,_,L2).
+?- sublist([c,d,e],[a,b,c,d,e,f]), write('[c,d,e] is sublist'), nl.
+
+% permutation
+permutation([],[]).
+permutation(L,[X|P]) :- delete(L,X,Tmp), permutation(Tmp,P).
+?- permutation([1,2,3],P), write(P), fail.
+
+% equal_length
+equal_length([],[]).
+equal_length([_|T1],[_|T2]) :- equal_length(T1,T2).
+?- equal_length([1,2,3],[2,3,4]), write('equal_length'), nl.
+
+% flatten
+flatten([],[]).
+flatten([H|T],Lflat) :- flatten(H,Lflat_left), flatten(T,Lflat_right), append(Lflat_left,Lflat_right,Lflat).
+flatten(X,[X]).
+?- flatten([a,b,[c,d],[],[[[e]]],f],L), write(L), nl.
+
+
 
 % exit
 ?- halt.

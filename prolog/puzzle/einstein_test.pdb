@@ -6,11 +6,11 @@ right_of(X,Y) :- X =:= Y+1.
 
 puzzle(X) :-
 	Street=[
-		house(1,Man1,Color1,Pet1,Drink1,Smoke1),
-		house(2,Man2,Color2,Pet2,Drink2,Smoke2),
-		house(3,Man3,Color3,Pet3,Drink3,Smoke3),
-		house(4,Man4,Color4,Pet4,Drink4,Smoke4),
-		house(5,Man5,Color5,Pet5,Drink5,Smoke5)],
+		house(1,_Man1,_Color1,_Pet1,_Drink1,_Smoke1),
+		house(2,_Man2,_Color2,_Pet2,_Drink2,_Smoke2),
+		house(3,_Man3,_Color3,_Pet3,_Drink3,_Smoke3),
+		house(4,_Man4,_Color4,_Pet4,_Drink4,_Smoke4),
+		house(5,_Man5,_Color5,_Pet5,_Drink5,_Smoke5)],
 	member(house(_,british,red,_,_,_),Street),
 	member(house(_,swede,_,dog,_,_),Street),
 	member(house(_,danish,_,_,tee,_),Street),
