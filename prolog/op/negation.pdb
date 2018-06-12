@@ -1,0 +1,56 @@
+not_test(P) :-
+	P, !, fail
+	;
+	true.
+
+store(a).
+store(b).
+store(c).
+fun(a).
+fun(c).
+expensive(a).
+
+good_store(X) :-
+	store(X),
+	not(expensive(X)).
+
+good_store_test(X) :-
+	store(X),
+	not_test(expensive(X)).
+
+good_store_fail(X) :-
+	not(expensive(X)).
+
+?- good_store(X), fun(X), write(X), nl.
+?- good_store_test(X), fun(X), write(X), nl.
+?- good_store_fail(X), fun(X), write(X), nl.
+
+
+not_inside([X], RuledOut, [X]) :-
+	not(member(X, RuledOut)), !.
+not_inside([_], _, []).
+not_inside([H|T], RuledOut, [H|Result]) :-	
+	not(member(H, RuledOut)),
+	not_inside(T, RuledOut, Result).
+not_inside([H|T], RuledOut, Result) :-	
+	not_inside(T, RuledOut, Result).
+
+?- not_inside([a,b,c,d], [b,d], X), write(X), nl.
+?- member(X, [a,b,c,d]), \+ member(X,[b,d]), write(X), nl, fail.
+
+
+unifiable([], _, []).
+unifiable([H|T], Term, Result) :-
+	not(H = Term), !,
+	unifiable(T, Term, Result).
+
+unifiable([H|T], Term, [H|Result]) :-
+	unifiable(T, Term, Result).
+
+?- unifiable([X, b, t(Y)], t(a), List), write(List), nl.
+
+	
+	
+	
+
+?- halt.	
