@@ -1,0 +1,37 @@
+%substitute(_Pattern, _Expression, _Replace, _NewExpression).
+substitute(Pattern, Pattern, Replace, Replace) :-
+	!.
+
+substitute(_Pattern, Expression, _Replace, Expression) :-
+	atomic(Expression), !.
+
+substitute(Pattern, Expression, Replace, Result) :-
+	Expression =.. [Func|Args], 
+	substlist(Pattern, Args, Replace, SubResult),
+	Result =.. [Func|SubResult].
+
+substlist(_, [], _, []).
+substlist(Pattern, [H|T], Replace, [Result|Results]) :-
+	substitute(Pattern, H, Replace, Result),
+	substlist(Pattern, T, Replace, Results).
+
+
+%?- trace.
+?- substitute(a+b, a+b+c+d*exp(a+b), tmp, X), write(X), nl.
+
+eval(E, SymbolVal, Result) :-
+	subst_symbols(E, SymbolVal, E1),
+	Result is E1.
+
+subst_symbols(E, [], E).
+subst_symbols(E, [H|T], E1) :-
+	H =.. [_|Args],
+	[Sym,Val] = Args,
+	substitute(Sym, E, Val, E2),
+	subst_symbols(E2, T, E1).
+
+%?- trace.
+?- eval(x*sin((x+y)/2), [x=1,y=2.14], V), write(V), nl.
+	
+	
+?- halt.

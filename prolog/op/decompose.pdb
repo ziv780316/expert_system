@@ -1,0 +1,25 @@
+square(_Side).
+triangle(_Side1, _Side2, _Side3).
+circle(_R).
+
+enlarge(Shape1, Factor, Shape2) :-
+	Shape1 =.. [Type|Args],
+	multiply_list(Args, Factor, Newlist),
+	Shape2 =.. [Type|Newlist].
+
+multiply_list([], _, []).
+multiply_list([H|T], Factor, [X|Result]) :-
+	number(H),
+	number(Factor),
+	X is H * Factor,
+	multiply_list(T, Factor, Result).
+multiply_list([H|T], Factor, [Factor*H|Result]) :-
+	multiply_list(T, Factor, Result).
+
+?- enlarge(triangle(_S1,_S2,_S3), 10, T), write(T), nl.
+?- enlarge(triangle(1,2,3), 10, S), write(S), nl.
+
+?- halt.
+
+	
+	
