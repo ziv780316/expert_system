@@ -1,0 +1,27 @@
+?- consult('../op/eval.pdb').
+
+for(Estart, Ecriteria, Eincr, Procedure) :-
+	Estart =.. [=, _, StartVal],
+	I is StartVal,
+	Ecriteria =.. [Op, _, Rhs],
+	Cmp =.. [Op, I, Rhs],
+	( 
+	call(Cmp),
+	subst_symbols(Procedure, [i=I], E1),
+	call(E1),
+	Eincr =.. [=, _, RhsE],
+	subst_symbols(RhsE, [i=I], E2),
+	N is E2,
+	for(i=N, Ecriteria, Eincr, Procedure)
+	;
+	true
+	).
+
+
+?- trace.
+?- for(i=1, i<10, i=i+1, (write(i), nl, V is sin(i), write(V), nl) ).
+%?- for(i=1, i<10, i=i+1, (write(i), nl) ).
+
+?- halt.
+
+	

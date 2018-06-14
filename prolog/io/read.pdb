@@ -1,0 +1,14 @@
+cube(N) :-
+	V is N * N * N,
+	write(V).
+echo_read(X) :-
+	read(X), write(X), nl.
+
+?- see(input), write('number: '), echo_read(X), write( 'output: '), write(X), nl.
+?- write('list: '), echo_read([H|T]), write( 'output: '), write(H), tab(1), write(T), nl.
+?- write('list: '), echo_read(L), write( 'output: '), write(L), nl.
+?- write('compound: '), echo_read(X), write( 'output: '), write(X), nl.
+?- write('functor: '), echo_read(Func), write( 'args: '), echo_read(Args), Goal =.. [Func|Args], call(Goal), nl.
+?- seen.
+
+?- halt.
