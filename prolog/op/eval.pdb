@@ -1,4 +1,7 @@
 %substitute(_Pattern, _Expression, _Replace, _NewExpression).
+substitute(_, Expression, _, Expression) :-
+	var(Expression).
+
 substitute(Pattern, Pattern, Replace, Replace) :-
 	!.
 
@@ -34,4 +37,4 @@ subst_symbols(E, [H|T], E1) :-
 ?- eval(x*sin((x+y)/2), [x=1,y=2.14], V), write(V), nl.
 	
 	
-?- halt.
+%?- halt.

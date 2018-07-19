@@ -1,4 +1,10 @@
+?- tell('/dev/null').
 ?- consult('../op/eval.pdb').
+?- told.
+
+copy_term_u(X, Y) :-
+	asserta(term_to_copy(X)),
+	retract(term_to_copy(Y)).
 
 for(Estart, Ecriteria, Eincr, Procedure) :-
 	Estart =.. [=, _, StartVal],
@@ -6,21 +12,23 @@ for(Estart, Ecriteria, Eincr, Procedure) :-
 	Ecriteria =.. [Op, _, Rhs],
 	Cmp =.. [Op, I, Rhs],
 	( 
-	call(Cmp),
-	subst_symbols(Procedure, [i=I], E1),
-	call(E1),
-	Eincr =.. [=, _, RhsE],
-	subst_symbols(RhsE, [i=I], E2),
-	N is E2,
-	for(i=N, Ecriteria, Eincr, Procedure)
-	;
-	true
+	 call(Cmp),
+	 subst_symbols(Procedure, [i=I], E1),
+	 copy_term_u(E1, E_copy), % prevent to instantiate variable in E1, so instantiate its copy
+	 call(E_copy),
+	 Eincr =.. [=, _, RhsE],
+	 subst_symbols(RhsE, [i=I], E2),
+	 N is E2,
+	 for(i=N, Ecriteria, Eincr, Procedure)
+	 ;
+	 true
 	).
 
 
-?- trace.
+%?- trace.
 ?- for(i=1, i<10, i=i+1, (write(i), nl, V is sin(i), write(V), nl) ).
 %?- for(i=1, i<10, i=i+1, (write(i), nl) ).
+%?- copy_term_u(X+Y,E), write(X), nl, write(Y), nl, write(E), nl.
 
 ?- halt.
 
